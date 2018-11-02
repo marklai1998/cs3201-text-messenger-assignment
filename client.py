@@ -5,6 +5,9 @@ import tkinter as tk
 from tkinter import ttk
 logging.getLogger().setLevel(10)
 
+backgroundColor = "#151515"
+textColor = "#e6e6e6"
+
 
 class getClient(ttk.Frame):
     bufferSize = 1024
@@ -13,7 +16,9 @@ class getClient(ttk.Frame):
         self.master = master
         self.IP = IP
         self.PORT = PORT
-        ttk.Frame.__init__(self)
+
+        ttk.Style().configure("BW.TFrame", foreground="black", background=backgroundColor)
+        ttk.Frame.__init__(self, style="BW.TFrame")
 
         messages_frame = ttk.Frame(self)
         self.textInput = tk.StringVar()  # For the messages to be sent.

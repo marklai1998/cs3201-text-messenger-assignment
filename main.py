@@ -49,6 +49,25 @@ def stopClient():
         client = None
 
 
+def header(self):
+    frame = ttk.Frame(self)
+
+    ttk.Style().configure("Logo.TLabel", foreground="black",
+                          background="#2d3034", width=50, padding=5)
+    load = Image.open('./assets/logo.png').resize((26, 26))
+    render = ImageTk.PhotoImage(load)
+    img = ttk.Label(frame, image=render, style="Logo.TLabel")
+    img.image = render
+    img.place(x=0, y=0)
+    img.pack(side="left")
+    ttk.Style().configure("Title.TLabel", foreground=textColor,
+                          background="#222", font=('Rajdhani', 15), padding=5)
+    ttk.Label(frame, text="cs3201 Text Messenger App",
+              style="Title.TLabel").pack(side="left", fill="x", expand=1)
+
+    frame.place(x=0, y=0, relwidth=1)
+
+
 class App(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
@@ -57,7 +76,7 @@ class App(tk.Tk):
         self.resizable(0, 0)
         self.configure(background=backgroundColor)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
-        self._frame = None
+        self.screen = None
         self.goToPage(MainPage)
 
     def on_closing(self):
@@ -67,12 +86,9 @@ class App(tk.Tk):
             stopServer()
         root.destroy()
 
-    def goToPage(self, frame_class):
-        new_frame = frame_class(self)
-        if self._frame is not None:
-            self._frame.destroy()
-        self._frame = new_frame
-        self._frame.pack(fill="both", expand=1)
+    def goToPage(self, frameClass):
+        newFrame = frameClass(self)
+        self.initPage(newFrame)
 
     def backToMain(self):
         self.goToPage(MainPage)
@@ -80,43 +96,41 @@ class App(tk.Tk):
     def openClient(self, IP, PORT):
         global client
         client = getClient(self, IP, PORT)
-        if self._frame is not None:
-            self._frame.destroy()
-        self._frame = client
-        self._frame.pack()
+        self.initPage(client)
+
+    def initPage(self, newFrame):
+        if self.screen is not None:
+            self.screen.destroy()
+        self.screen = newFrame
+        header(self)
+        self.screen.pack(fill="both", expand=1)
 
 
 class MainPage(ttk.Frame):
     def __init__(self, master):
-        ttk.Style().configure("BW.TFrame", foreground="black", background=backgroundColor)
-        ttk.Frame.__init__(self, style="BW.TFrame")
+        frameStyle = ttk.Style()
+        frameStyle.theme_use('default')
+        frameStyle.configure("mainPage.TFrame", background=backgroundColor)
+        ttk.Frame.__init__(self, style="mainPage.TFrame")
         global server, client
         if client is not None:
             stopClient()
         if server is not None:
             stopServer()
 
-        ttk.Style().configure("Logo.TLabel", foreground="black", background="#2d3034")
-        load = Image.open('./assets/logo.png')
-        render = ImageTk.PhotoImage(load)
-        img = ttk.Label(self, image=render, style="Logo.TLabel")
-        img.image = render
-        img.place(x=0, y=0)
-        img.pack(side="top")
-
-        ttk.Style().configure("Title.TLabel", foreground=textColor,
-                              background="#222", font=('Rajdhani', 15), padding=5)
-        ttk.Label(self, text="cs3201 Text Messenger App",
-                  style="Title.TLabel").pack(side="top", fill="x", expand=1)
-        ttk.Button(self, text="Host a new room",
-                   command=lambda: master.goToPage(CreateServer)).pack(fill="x", expand=1)
-        ttk.Button(self, text="Connect to an existing room",
-                   command=lambda: master.goToPage(ConnectServer)).pack(fill="x", expand=1)
+        ttk.Style().configure("mainPage.TButton", background="#222222", borderwidth=0, highlightbackground="#222222",highlightcolor="#222222",
+                              foreground=textColor, padding=(20, 5, 20, 5), font=('Rajdhani', 12))
+        ttk.Button(self, style="mainPage.TButton", text="Host a new room",
+                   command=lambda: master.goToPage(CreateServer)).pack(expand=1)
+        ttk.Button(self, style="mainPage.TButton", text="Connect to an existing room",
+                   command=lambda: master.goToPage(ConnectServer)).pack(expand=1)
 
 
 class CreateServer(ttk.Frame):
     def __init__(self, master):
-        ttk.Frame.__init__(self)
+        ttk.Style().configure("mainFrame.TFrame",
+                              foreground="black", background=backgroundColor)
+        ttk.Frame.__init__(self, style="mainFrame.TFrame")
         ttk.Label(self, text="Create a new server").pack(
             side="top", fill="x", pady=10)
         ttk.Entry(self, textvariable=PORT).pack()
@@ -128,7 +142,9 @@ class CreateServer(ttk.Frame):
 
 class ConnectServer(ttk.Frame):
     def __init__(self, master):
-        ttk.Frame.__init__(self)
+        ttk.Style().configure("mainFrame.TFrame",
+                              foreground="black", background=backgroundColor)
+        ttk.Frame.__init__(self, style="mainFrame.TFrame")
         ttk.Label(self, text="Create a new server").pack(
             side="top", fill="x", pady=10)
         ttk.Entry(self, textvariable=IP).pack()
