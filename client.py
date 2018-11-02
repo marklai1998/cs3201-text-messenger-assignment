@@ -21,11 +21,11 @@ class getClient(ttk.Frame):
         ttk.Frame.__init__(self, style="BW.TFrame")
 
         messages_frame = ttk.Frame(self)
-        self.textInput = tk.StringVar()  # For the messages to be sent.
+        self.textInput = tk.StringVar()
         self.textInput.set("Type your messages here.")
-        # To navigate through past messages.
+
         scrollbar = ttk.Scrollbar(messages_frame)
-        # Following will contain the messages.
+
         self.messageList = tk.Listbox(messages_frame, height=15,
                                       width=50, yscrollcommand=scrollbar.set)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
@@ -34,7 +34,7 @@ class getClient(ttk.Frame):
         messages_frame.pack()
 
         entry_field = ttk.Entry(self, textvariable=self.textInput)
-        # entry_field.bind("<Return>", self.send(self.textInput.get()))
+
         entry_field.pack()
         send_button = ttk.Button(
             self, text="Send", command=lambda: self.send(self.textInput.get()))
@@ -63,11 +63,16 @@ class getClient(ttk.Frame):
         while self.CLIENT is not None:
             try:
                 msg = self.CLIENT.recv(self.bufferSize).decode("utf8")
-                self.messageList.insert(tk.END, msg)
-            except:  # Possibly client has left the chat.
+                print(msg)
+                if msg != "*SERVER_STOP*":
+                    self.messageList.insert(tk.END, msg)
+                else:
+                    self.master.backToMain()
+                    break
+            except:
                 logging.debug('Client Stopped')
                 break
 
     def send(self, message):
-        self.textInput.set("")  # Clears input field.
+        self.textInput.set("")
         self.CLIENT.send(bytes(message, "utf8"))
