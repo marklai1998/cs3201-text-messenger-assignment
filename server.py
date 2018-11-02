@@ -53,7 +53,6 @@ class getServer:
                 try:
                     msg = client.recv(self.bufferSize)
                     self.broadcast(msg, name+": ")
-                    break
                 except:
                     try:
                         client.send(bytes("*SERVER_STOP*", "utf8"))

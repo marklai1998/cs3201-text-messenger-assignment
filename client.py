@@ -17,31 +17,40 @@ class getClient(ttk.Frame):
         self.IP = IP
         self.PORT = PORT
 
-        ttk.Style().configure("BW.TFrame", foreground="black", background=backgroundColor)
-        ttk.Frame.__init__(self, style="BW.TFrame")
+        ttk.Style().theme_use('default')
+        ttk.Frame.__init__(self, style="mainFrame.TFrame")
 
-        messages_frame = ttk.Frame(self)
+        messagesFrame = ttk.Frame(self)
         self.textInput = tk.StringVar()
-        self.textInput.set("Type your messages here.")
-
-        scrollbar = ttk.Scrollbar(messages_frame)
-
-        self.messageList = tk.Listbox(messages_frame, height=15,
-                                      width=50, yscrollcommand=scrollbar.set)
+        scrollbar = ttk.Scrollbar(messagesFrame)
+        self.messageList = tk.Listbox(messagesFrame, height=15,
+                                      width=50, yscrollcommand=scrollbar.set, borderwidth=0, font=('Rajdhani', 15))
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.messageList.pack(side=tk.LEFT, fill=tk.BOTH)
-        self.messageList.pack()
-        messages_frame.pack()
+        self.messageList.pack(fill="both", expand=1)
+        messagesFrame.pack(side="top", fill="both", expand=1)
 
-        entry_field = ttk.Entry(self, textvariable=self.textInput)
+        sendButtonStyle = ttk.Style()
+        sendButtonStyle.theme_use('default')
+        sendButtonStyle.configure("clientSend.TButton", background="#2196f3", padding=(5, 7, 5, 7), borderwidth=0,
+                                  foreground="#FFF", font=('Rajdhani', 12))
+        sendButtonStyle.map("clientSend.TButton", background=[
+            ('focus', "#1976d2")])
+        exitButtonStyle = ttk.Style()
+        exitButtonStyle.theme_use('default')
+        exitButtonStyle.configure("clientExit.TButton", background="#1976d2", padding=(10, 7, 10, 7), borderwidth=0,
+                                  foreground="#FFF", font=('Rajdhani', 12))
+        exitButtonStyle.map("clientSend.TButton", background=[
+            ('focus', "#1976d2")])
 
-        entry_field.pack()
-        send_button = ttk.Button(
-            self, text="Send", command=lambda: self.send(self.textInput.get()))
-        send_button.pack()
-
-        ttk.Button(self, text="Return to start page",
-                   command=lambda: master.backToMain()).pack()
+        inputFrame = ttk.Frame(self)
+        ttk.Entry(inputFrame, textvariable=self.textInput, style="field.TEntry", font=('Rajdhani', 15)).pack(
+            side="left", expand=1)
+        ttk.Button(
+            inputFrame, text="Send", command=lambda: self.send(self.textInput.get()), style="clientSend.TButton").pack(side="left", expand=1)
+        ttk.Button(inputFrame, text="Exit",
+                   command=lambda: master.backToMain(), style="clientExit.TButton").pack(side="left", expand=1)
+        inputFrame.pack(side="bottom", fill="x")
 
     def startClient(self):
         address = (self.IP, self.PORT)
