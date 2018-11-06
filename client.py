@@ -2,7 +2,7 @@ from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 import logging
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 logging.getLogger().setLevel(10)
 
 backgroundColor = "#151515"
@@ -53,12 +53,16 @@ class getClient(ttk.Frame):
         inputFrame.pack(side="bottom", fill="x")
 
     def startClient(self):
-        address = (self.IP, self.PORT)
-        self.CLIENT = socket(AF_INET, SOCK_STREAM)
-        self.CLIENT.connect(address)
-        logging.debug("Connected Server at %s:%i" % (self.IP, self.PORT))
-        thread = Thread(target=self.receive)
-        thread.start()
+        try:
+            address = (self.IP, self.PORT)
+            self.CLIENT = socket(AF_INET, SOCK_STREAM)
+            self.CLIENT.connect(address)
+            logging.debug("Connected Server at %s:%i" % (self.IP, self.PORT))
+            thread = Thread(target=self.receive)
+            thread.start()
+        except:
+            self.master.backToMain()
+            messagebox.showerror("Error", "Server Not Found")
 
     def stopClient(self):
         try:
@@ -77,6 +81,7 @@ class getClient(ttk.Frame):
                     self.messageList.insert(tk.END, msg)
                 else:
                     self.master.backToMain()
+                    messagebox.showerror("Error", "Connection Lost")
                     break
             except:
                 logging.debug('Client Stopped')
