@@ -75,7 +75,7 @@ class App(tk.Tk):
         self.geometry("350x700")
         self.resizable(0, 0)
         self.configure(background=backgroundColor)
-        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.protocol("WM_DELETE_WINDOW", self.onClosing)
         self.screen = None
         self.goToPage(MainPage)
         global PORT, IP
@@ -110,7 +110,7 @@ class App(tk.Tk):
         fieldStyle.configure("field.TEntry", borderwidth=0, fieldbackground="#f5f5f5",
                              padding=(10, 6, 10, 6))
 
-    def on_closing(self):
+    def onClosing(self):
         if client is not None:
             stopClient()
         if server is not None:

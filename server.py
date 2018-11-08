@@ -23,9 +23,13 @@ class getServer:
         thread.start()
 
     def stopServer(self):
-        self.broadcast(bytes("*SERVER_STOP*", "utf8"))
-        self.SERVER.close()
-        self.SERVER = None
+        try:
+            logging.debug("Stopping Server")
+            self.broadcast(bytes("*SERVER_STOP*", "utf8"))
+            self.SERVER.close()
+            self.SERVER = None
+        except:
+            pass
 
     def acceptConnections(self):
         while self.SERVER is not None:

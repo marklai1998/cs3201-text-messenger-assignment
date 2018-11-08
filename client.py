@@ -37,6 +37,7 @@ class getClient(ttk.Frame):
         sendButtonStyle.map("clientSend.TButton", background=[
             ('focus', "#1976d2")])
         exitButtonStyle = ttk.Style()
+
         exitButtonStyle.theme_use('default')
         exitButtonStyle.configure("clientExit.TButton", background="#1976d2", padding=(10, 7, 10, 7), borderwidth=0,
                                   foreground="#FFF", font=('Rajdhani', 12))
@@ -63,10 +64,11 @@ class getClient(ttk.Frame):
         except:
             self.master.backToMain()
             messagebox.showerror("Error", "Server Not Found")
+            logging.error("Server Not Found")
 
     def stopClient(self):
         try:
-            logging.debug("stopping")
+            logging.debug("Stopping Client")
             self.CLIENT.close()
             self.CLIENT = None
         except:
@@ -76,12 +78,13 @@ class getClient(ttk.Frame):
         while self.CLIENT is not None:
             try:
                 msg = self.CLIENT.recv(self.bufferSize).decode("utf8")
-                print(msg)
+                logging.debug("Message received: %s " % (msg))
                 if msg != "*SERVER_STOP*":
                     self.messageList.insert(tk.END, msg)
                 else:
                     self.master.backToMain()
                     messagebox.showerror("Error", "Connection Lost")
+                    logging.error("Connection Lost")
                     break
             except:
                 logging.debug('Client Stopped')
