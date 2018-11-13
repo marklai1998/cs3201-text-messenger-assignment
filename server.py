@@ -14,13 +14,18 @@ class getServer:
         self.PORT = port
 
     def startServer(self):
-        address = (self.HOST, self.PORT)
-        self.SERVER = socket(AF_INET, SOCK_STREAM)
-        self.SERVER.bind(address)
-        self.SERVER.listen(5)
-        logging.debug("Accepting connection at port %i" % self.PORT)
-        thread = Thread(target=self.acceptConnections)
-        thread.start()
+        try:
+            address = (self.HOST, self.PORT)
+            self.SERVER = socket(AF_INET, SOCK_STREAM)
+            self.SERVER.bind(address)
+            self.SERVER.listen(5)
+            logging.debug("Accepting connection at port %i" % self.PORT)
+            thread = Thread(target=self.acceptConnections)
+            thread.start()
+         except:
+            self.master.backToMain()
+            messagebox.showerror("Error", "Fail to bind port")
+            logging.error("Fail to bind port")
 
     def stopServer(self):
         try:
