@@ -22,7 +22,7 @@ class getServer:
             logging.debug("Accepting connection at port %i" % self.PORT)
             thread = Thread(target=self.acceptConnections)
             thread.start()
-         except:
+        except:
             self.master.backToMain()
             messagebox.showerror("Error", "Fail to bind port")
             logging.error("Fail to bind port")
