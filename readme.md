@@ -1,12 +1,12 @@
 # CS3201 Text Messenger Assignment
 ## Introduction
-This repository is created for `City University HK` course `CS3201 - Computer Networks` programming assignment
+This repository is created for `City University HK` course `CS3201 - Computer Networks` programming assignment <br />
 All credit goes to: Mark Lai
 
 ## Assignment requirement
-Aim to create a TCP based text messenger app for 2 or more participant.
-Both participants can both send receive messages.
-Multi-threading and non blocking topology is a bonus.
+Aim to create a TCP based text messenger app for 2 or more participant. <br />
+Both participants can both send receive messages. <br />
+Multi-threading and non blocking topology is a bonus. <br />
 
 ## Library used
 | Library   | Usage                                          |
@@ -26,13 +26,13 @@ Multi-threading and non blocking topology is a bonus.
 
 ## Logic flow
 ### Join an existing room
-User will be prompted to type in the correct IP and port and a socket will be created with a try catch
-Error message will prompt if server can't reach for whatever reason
-After the connection made, user will be switch to the chatroom UI
+User will be prompted to type in the correct IP and port and a socket will be created with a try catch. <br />
+Error message will prompt if server can't reach for whatever reason. <br />
+After the connection made, user will be switch to the chatroom UI. <br />
 
 ### Host a new room
-User will only be prompted for the port, and the IP will keep as default (127.0.0.1)
-A server will be created and run in background
-After creating the server, user will create a client connect to localhost with the same port
-After the connection made, user will be switch to the chatroom UI
+User will only be prompted for the port, and the IP will keep as default (127.0.0.1). <br />
+A server will be created and run in background. <br />
+After creating the server, user will create a client connect to localhost with the same port. <br />
+After the connection made, user will be switch to the chatroom UI. <br />
 
