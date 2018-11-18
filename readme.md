@@ -8,6 +8,16 @@ Aim to create a TCP based text messenger app for 2 or more participant. <br />
 Both participants can both send receive messages. <br />
 Multi-threading and non blocking topology is a bonus. <br />
 
+## Getting Started
+1. Install Pillow with pip:
+```
+$ pip install Pillow
+```
+2. Start the project
+```
+$ python main.py
+```
+
 ## Library used
 | Library   | Usage                                          |
 | --------- | ---------------------------------------------- |
