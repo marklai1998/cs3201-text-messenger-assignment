@@ -3,7 +3,7 @@
 This repository is created for `City University HK` course `CS3201 - Computer Networks` programming assignment <br />
 All credit goes to: Mark Lai
 
-## Assignment requirement
+## Assignment Requirement
 Aim to create a TCP based text messenger app for 2 or more participant. <br />
 Both participants can both send receive messages. <br />
 Multi-threading and non blocking topology is a bonus. <br />
@@ -18,7 +18,7 @@ $ pip install Pillow
 $ python main.py
 ```
 
-## Library used
+## Library Used
 | Library   | Usage                                          |
 | --------- | ---------------------------------------------- |
 | logging   | Implement appropriate logging style on console |
@@ -27,14 +27,14 @@ $ python main.py
 | PIL       | Import logo image for UI representation        |
 | socket    | Handle both the client and server connections  |
 
-## File description
+## File Description
 | File      | Usage                                                                        |
 | --------- | ---------------------------------------------------------------------------- |
 | main.py   | Main logic and UI implementation                                             |
 | client.py | Handle the client connection and the chatroom UI                             |
 | server.py | Server hosting, handle all the client connection and broadcasting of message |
 
-## Logic flow
+## Logic Flow
 ### Join an existing room
 User will be prompted to type in the correct IP and port and a socket will be created with a try catch. <br />
 Error message will prompt if server can't reach for whatever reason. <br />
