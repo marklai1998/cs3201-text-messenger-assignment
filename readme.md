@@ -9,11 +9,13 @@ Both participants can both send receive messages. <br />
 Multi-threading and non blocking topology is a bonus. <br />
 
 ## Getting Started
-1. Install Pillow with pip:
+1. Clone the repository
+
+2. Install Pillow with pip
 ```
 $ pip install Pillow
 ```
-2. Start the project
+3. Start the project
 ```
 $ python main.py
 ```
